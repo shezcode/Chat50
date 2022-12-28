@@ -4,14 +4,16 @@ import './App.css'
 function App() {
   const [message, setMessage] = useState('')
   const [response, setResponse] = useState('')
-  const [messages, setMessages] = useState([])
-  const [responses, setResponses] = useState([])
+  const [msg, setMsg] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
 
 
 
   const PORT = 3001
 
-  const handleSubmit = e => {
+  //create a handle submit function that will send the message to the server, and then set the response to the message that the server sends back, and then set the message to an empty string
+
+  const handleSubmit = (e) => {
     e.preventDefault()
     fetch(`http://localhost:${PORT}/chat`, {
       method: 'POST',
@@ -21,11 +23,13 @@ function App() {
       body: JSON.stringify({ message })
     })
       .then(res => res.json())
-      .then(data => setResponse(data.message))
-    setMessages([...messages, message])
-    setMessage('')
-    setResponses([...responses, response])
-    console.log(messages)
+      .then(data => {
+        setIsLoading(true)
+        setResponse(data.message)
+        setMsg([...msg, message, data.message])
+        setMessage('')
+      })
+      setIsLoading(false)
   }
 
   return (
@@ -33,13 +37,22 @@ function App() {
       <h1 className='text-2xl mt-8 p-2 text-green-500 text-center'>Chat50</h1>
       <div>
         <p className='text-green-500 m-4 ml-20 bg-black w-40 text-center rounded-md p-2'>Messages</p>
-        {messages.map((msg, i) => {
-          return (<p key={i} className='text-green-500 m-4 bg-gray-800 p-10'>{msg}</p>)
+        {msg.map((msg, i) => {
+          if (i % 2 === 0) {
+            return (
+              <div key={i} className='flex flex-row justify-end mr-8'>
+                <p key={i} className='bg-green-500 text-black p-2 rounded-md m-4'>{msg}</p>
+              </div>
+            )
+          } else {
+            return (
+              <div key={i} className='flex flex-row justify-start ml-8'>
+                <p key={i} className='bg-black text-green-500 p-2 rounded-md m-4'>{msg}</p>
+              </div>
+            )
+          }
         })}
-        {response && responses.map((res, i) => {
-          return (<p key={i} className='text-green-500 m-4 bg-gray-800 p-10'>{res}</p>) 
-        }
-        )}
+        {!isLoading && <p className='text-green-500 m-4 ml-20 bg-black w-40 text-center rounded-md p-2'>Loading...</p>}
       </div>
 
 
