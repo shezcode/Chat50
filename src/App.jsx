@@ -7,8 +7,6 @@ function App() {
   const [msg, setMsg] = useState([])
   const [isLoading, setIsLoading] = useState(true)
 
-
-
   const PORT = 3001
 
   //create a handle submit function that will send the message to the server, and then set the response to the message that the server sends back, and then set the message to an empty string
@@ -20,7 +18,7 @@ function App() {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ message })
+      body: JSON.stringify({ conversation: createConversation(message) })
     })
       .then(res => res.json())
       .then(data => {
@@ -31,6 +29,20 @@ function App() {
       })
       setIsLoading(false)
   }
+
+  const createConversation = (prompt) => {
+    let conversation = ''
+    for (let i = 0; i < msg.length; i++) {
+      if (i % 2 === 0) {
+        conversation += `Me: ${msg[i]} \n`
+      }
+      else {
+        conversation += `You: ${msg[i]} \n`
+      }
+    }
+    return conversation + `Me: ${prompt}`
+  }
+
 
   return (
     <div className='h-full flex flex-col justify-center'>
@@ -54,15 +66,17 @@ function App() {
         })}
         {!isLoading && <p className='text-green-500 m-4 ml-20 bg-black w-40 text-center rounded-md p-2'>Loading...</p>}
       </div>
+      {/* create an empty div to fill the remaining space*/}
+      <div className='h-80'></div>
 
 
-      <form onSubmit={handleSubmit} className='flex justify-center items-center flex-row form'>
+      <form onSubmit={handleSubmit} className='flex justify-center items-center flex-row  form'>
         <textarea 
           type='text'
           value={message}
           onChange={e => setMessage(e.target.value)}
           placeholder='...'
-          className='w-1/2 h-32 flex justify-center items-center border border-gray-300 rounded py-4 px-4 mb-4 leading-tight focus:outline-none focus:border-green-500 '
+          className='w-1/2 h-32 flex justify-center items-center border border-gray-300 rounded py-4 px-4 mb-4∂ focus:outline-none focus:border-green-500 '
           />
         <button 
           className='bg-green-500 hover:bg-green-700 font-bold py-2 px-4 rounded m-8 text-black'

@@ -20,15 +20,15 @@ app.use(cors());
 
 
 app.post('/chat', async (req, res) => {
-  const { message } = req.body;
+  const { conversation } = req.body;
   const response = await openai.createCompletion({
     model: "text-davinci-003",
-    prompt: `${message}`,
+    prompt: `You are tasked to inform CS50 students about the basics of computer programming, and therefore you should only reply in CompSci terms to any prompt you are given. The prompt is: ${conversation} \n You:`,
     max_tokens: 200,
-    temperature: 0,
+    temperature: 0.5,
   });
   if (response.data) {
-    console.log(response.data)
+    console.log(response)
     res.json({ message: response.data.choices[0].text });
   }
 });
