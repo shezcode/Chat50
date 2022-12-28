@@ -5,11 +5,11 @@ function App() {
   const [message, setMessage] = useState('')
   const [response, setResponse] = useState('')
 
-  const PORT = import.meta.env.VITE_PORT
+  const PORT = 3001
 
   const handleSubmit = e => {
     e.preventDefault()
-    fetch(`http://localhost:${PORT}/`, {
+    fetch(`http://localhost:${PORT}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -39,7 +39,6 @@ function App() {
       <div className='mt-8'>
         {response && <p>{response}</p>}
       </div>
-
     </div>
   )
 }
