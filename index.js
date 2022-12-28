@@ -19,7 +19,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 
-app.post('/', async (req, res) => {
+app.post('/chat', async (req, res) => {
   const { message } = req.body;
   const response = await openai.createCompletion({
     model: "text-davinci-003",
