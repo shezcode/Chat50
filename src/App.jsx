@@ -22,19 +22,24 @@ function App() {
 
 
   return (
-    <div className="App">
-      <h1 className='text-white'>Chat50</h1>
+    <div>
+      <h1 className='text-2xl m-2 p-2'>Chat50</h1>
       <form onSubmit={handleSubmit}>
         <textarea 
           type='text'
           value={message}
           onChange={e => setMessage(e.target.value)}
           placeholder='Type your message here'
-          
+          className='w-full h-32 border border-gray-300 rounded py-2 px-4 mb-4 leading-tight focus:outline-none focus:border-blue-500'
           />
-        <button type='submit'>Send</button>
+        <button 
+          className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
+          type='submit'>Send</button>
       </form>
-      {response && <p>{response}</p>}
+      <div className='mt-8'>
+        {response && <p>{response}</p>}
+      </div>
+
     </div>
   )
 }
