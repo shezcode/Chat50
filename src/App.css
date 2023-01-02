@@ -9,3 +9,43 @@
   z-index: 99;
   background-color: #242424;
 }
+
+.custom-shape-divider-top-1672333032 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.custom-shape-divider-top-1672333032 svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 39px;
+}
+
+.custom-shape-divider-top-1672333032 .shape-fill {
+  fill: #3eb489;
+}
+
+.custom-shape-divider-top-1672333763 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.custom-shape-divider-top-1672333763 svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 183px;
+}
+
+.custom-shape-divider-top-1672333763 .shape-fill {
+  fill: #0a0a0a;
+}
