@@ -1,10 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export const Chat = () => {
   const [message, setMessage] = useState('')
   const [response, setResponse] = useState('')
   const [msg, setMsg] = useState([])
   const [isLoading, setIsLoading] = useState(true)
+  const msgEndRef = useRef(null)
+
+  const scrollToBottom = () => {
+    msgEndRef.current.scrollIntoView({ behavior: "smooth" })
+  }
+
+  useEffect(() => {
+    scrollToBottom()
+  }, [msg])
 
   const PORT = 3001
 
@@ -29,6 +38,12 @@ export const Chat = () => {
       setIsLoading(false)
   }
 
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleSubmit(e)
+    }
+  }
+
   const createConversation = (prompt) => {
     let conversation = ''
     for (let i = 0; i < msg.length; i++) {
@@ -42,36 +57,40 @@ export const Chat = () => {
     return conversation + `Me: ${prompt}`
   }
 
-
   return (
     <div className='h-full flex flex-col justify-center'>
       <h1 className='text-2xl mt-8 p-2 text-primary text-center'>Chat50</h1>
-      <div>
+      <div ref={msgEndRef}>
         <p className='text-primary m-4 ml-32 bg-black w-40 text-center rounded-md p-2'>Chat history</p>
         {msg.map((msg, i) => {
           if (i % 2 === 0) {
             return (
               <div key={i} className='flex flex-row justify-end mr-8'>
-                <p key={i} className='bg-primary text-secondary p-2 rounded-md m-4'>{msg}</p>
+                <p key={i} className='bg-primary text-secondary p-2 rounded-md m-4 z-10'>{msg}</p>
               </div>
             )
           } else {
             return (
               <div key={i} className='flex flex-row justify-start ml-8'>
-                <p key={i} className='bg-secondary text-primary p-2 rounded-md m-4'>{msg}</p>
+                <p key={i} className='bg-secondary text-primary p-2 rounded-md m-4 z-10'>{msg}</p>
               </div>
             )
           }
         })}
-        {!isLoading && <p className='text-primary m-4 ml-20 bg-secondary w-40 text-center rounded-md p-2'>Loading...</p>}
+        <div className="flex justify-center items-center m-6">
+          {!isLoading && <p className='text-primary  bg-secondary w-40 text-center rounded-md p-2'>Loading...</p>}
+        </div>
+
       </div>
-      {/* create an empty div to fill the remaining space*/}
-      <div className='h-80'></div>
-      <form onSubmit={handleSubmit} className='flex justify-center items-center flex-row  form'>
+      {/* create an empty div to fill the space */}
+      <div className="h-96"></div>
+
+      <form onSubmit={handleSubmit} className='flex justify-center items-center flex-row form'>
         <textarea 
           type='text'
           value={message}
           onChange={e => setMessage(e.target.value)}
+          onKeyDown={handleKeyDown}
           placeholder='...'
           className='w-1/2 h-32 flex justify-center items-center border border-secondary rounded py-4 px-4 mb-4∂ focus:outline-none focus:border-green-500 '
           />
