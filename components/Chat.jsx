@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import Navbar from "./Navbar";
 
 export const Chat = () => {
   const [message, setMessage] = useState('')
@@ -83,7 +84,7 @@ export const Chat = () => {
 
       </div>
       {/* create an empty div to fill the space */}
-      <div className="h-96"></div>
+      <div className="h-60"></div>
 
       <form onSubmit={handleSubmit} className='flex justify-center items-center flex-row form'>
         <textarea 
@@ -98,7 +99,7 @@ export const Chat = () => {
           className='bg-primary hover:bg-jade font-bold py-2 px-4 rounded m-8 text-secondary '
           type='submit'>Send</button>
       </form>
-      <div className="spacer layer"></div>
+      <div className="spacer"></div>
     </div>
   )
 }
