@@ -79,6 +79,7 @@ export const Chat = () => {
           className='bg-primary hover:bg-jade font-bold py-2 px-4 rounded m-8 text-secondary '
           type='submit'>Send</button>
       </form>
+      <div className="spacer layer"></div>
     </div>
   )
 }

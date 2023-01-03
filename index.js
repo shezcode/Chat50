@@ -23,7 +23,7 @@ app.post('/chat', async (req, res) => {
   const { conversation } = req.body;
   const response = await openai.createCompletion({
     model: "text-davinci-003",
-    prompt: `You are tasked to inform CS50 students about the basics of computer programming, and therefore you should only reply in CompSci terms to any prompt you are given. The prompt is: ${conversation} \n You:`,
+    prompt: `Pretend you are a chatbot for a web app that is being used in my final project for CS50, you should try to answer to every prompt with some compsci related terminology. The prompt is: ${conversation} \n You:`,
     max_tokens: 200,
     temperature: 0.5,
   });
